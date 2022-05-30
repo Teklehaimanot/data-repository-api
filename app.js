@@ -1,4 +1,5 @@
 const express = require('express')
+const auth = require('./modules/auth')
 var cors = require('cors')
 var app = express()
 
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/user', require('./api/user/user.router'))
+app.use('/api/dataset', auth, require('./api/dataset/dataset.router'))
 
 
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true })
