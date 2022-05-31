@@ -41,7 +41,7 @@ datasetRouter.delete('/:datasetId', datasetController.removeDataset)
 // @params none
 // method post
 //auth private
-// post file
+// upload file
  */
 datasetRouter.post('/upload', datasetController.fileUpload)
 
