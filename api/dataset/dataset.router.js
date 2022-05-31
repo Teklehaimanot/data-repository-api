@@ -37,4 +37,12 @@ datasetRouter.put('/:datasetId', datasetController.datasetUpdate)
  */
 datasetRouter.delete('/:datasetId', datasetController.removeDataset)
 
+/*
+// @params none
+// method post
+//auth private
+// post file
+ */
+datasetRouter.post('/upload', datasetController.fileUpload)
+
 module.exports = datasetRouter

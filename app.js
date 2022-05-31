@@ -1,14 +1,18 @@
 const express = require('express')
 const auth = require('./modules/auth')
+const upload = require('express-fileupload')
+
 var cors = require('cors')
 var app = express()
 
 app.use(cors())
 const mongoose = require('mongoose')
+
 require('dotenv/config')
 
 
 app.use(express.json())
+app.use(upload())
 
 app.get('/', (req, res) => {
     res.send('we are on home page')

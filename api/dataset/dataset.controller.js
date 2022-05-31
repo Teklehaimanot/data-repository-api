@@ -1,4 +1,3 @@
-const { rearg } = require('lodash')
 const Dataset = require('./dataset.model')
 
 const createOne = async(req, res) => {
@@ -10,7 +9,7 @@ const createOne = async(req, res) => {
         sex_coverage: req.body.sex_coverage,
         data_collection_start_date: req.body.data_collection_start_date,
         data_collection_end_date: req.body.data_collection_end_date,
-        study_type: req.body.study_type
+        study_type: req.body.study_type,
 
     })
 
@@ -27,6 +26,7 @@ const createOne = async(req, res) => {
 }
 
 const getAll = async(req, res) => {
+    console.log(__dirname)
     try {
         const datasets = await Dataset.find()
         res.status(200).json({
@@ -84,9 +84,25 @@ const removeDataset = async(req, res) => {
     }
 }
 
+const fileUpload = (req, res) => {
+    if (req.files === null) {
+        return res.status(400).json({ message: 'No file Uploaded' })
+    }
+    const file = req.files.file
+    file.mv(`${__dirname}/public/uploads/${file.name}`, err => {
+        if (err) {
+            console.log(err)
+            return res.status(500).send(err)
+        }
+    })
+    res.status(200).json({ fileName: file.name, filePath: `/uploads/${file.name}` })
+
+}
+
 module.exports = {
     createOne,
     getAll,
     datasetUpdate,
-    removeDataset
+    removeDataset,
+    fileUpload
 }

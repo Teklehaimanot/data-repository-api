@@ -32,6 +32,11 @@ const datasetSchema = {
     study_type: {
         type: String,
         required: true
+    },
+    file_name: {
+        type: String,
+        required: true,
+        unique: true
     }
 }
 
