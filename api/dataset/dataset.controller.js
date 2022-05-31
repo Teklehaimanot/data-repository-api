@@ -26,7 +26,6 @@ const createOne = async(req, res) => {
 }
 
 const getAll = async(req, res) => {
-    console.log(__dirname)
     try {
         const datasets = await Dataset.find()
         res.status(200).json({
