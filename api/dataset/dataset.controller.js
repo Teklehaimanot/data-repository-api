@@ -10,8 +10,10 @@ const createOne = async(req, res) => {
         data_collection_start_date: req.body.data_collection_start_date,
         data_collection_end_date: req.body.data_collection_end_date,
         study_type: req.body.study_type,
+        file_name: req.body.file_name
 
     })
+
 
     try {
         const newDataset = await dataset.save()
@@ -84,6 +86,7 @@ const removeDataset = async(req, res) => {
 }
 
 const fileUpload = (req, res) => {
+    console.log(req.files)
     if (req.files === null) {
         return res.status(400).json({ message: 'No file Uploaded' })
     }
