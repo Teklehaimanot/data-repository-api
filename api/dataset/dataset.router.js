@@ -51,6 +51,6 @@ datasetRouter.post('/upload', datasetController.fileUpload)
 //auth private
 // download file
  */
-datasetRouter.get('/download', datasetController.downloadFile)
+datasetRouter.post('/download', datasetController.downloadFile)
 
 module.exports = datasetRouter

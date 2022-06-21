@@ -102,8 +102,13 @@ const fileUpload = (req, res) => {
 }
 
 const downloadFile = (req, res) => {
-    const file_name = req.body.file_name
-    res.download(`${__dirname}/public/uploads/${file_name}`)
+    try {
+        const file_name = req.body.file_name
+        const file = `${__dirname}/public/uploads/${file_name}`
+        res.download(file)
+    } catch (error) {
+        console.log(error)
+    }
 
 }
 module.exports = {
