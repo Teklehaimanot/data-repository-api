@@ -1,6 +1,6 @@
 const Dataset = require('./dataset.model')
 
-const createOne = async(req, res) => {
+const createOne = async (req, res) => {
     const dataset = new Dataset({
         dataset_name: req.body.dataset_name,
         data_type: req.body.data_type,
@@ -27,7 +27,7 @@ const createOne = async(req, res) => {
 
 }
 
-const getAll = async(req, res) => {
+const getAll = async (req, res) => {
     try {
         const datasets = await Dataset.find()
         res.status(200).json({
@@ -41,7 +41,7 @@ const getAll = async(req, res) => {
 
 }
 
-const datasetUpdate = async(req, res) => {
+const datasetUpdate = async (req, res) => {
     try {
         const find = await Dataset.findById({ _id: req.params.datasetId })
         if (!find) {
@@ -68,7 +68,7 @@ const datasetUpdate = async(req, res) => {
     }
 }
 
-const removeDataset = async(req, res) => {
+const removeDataset = async (req, res) => {
     try {
         const find = await Dataset.findById({ _id: req.params.datasetId })
         if (!find) {
@@ -101,10 +101,16 @@ const fileUpload = (req, res) => {
 
 }
 
+const downloadFile = (req, res) => {
+    const file_name = req.body.file_name
+    res.download(`${__dirname}/public/uploads/${file_name}`)
+
+}
 module.exports = {
     createOne,
     getAll,
     datasetUpdate,
     removeDataset,
-    fileUpload
+    fileUpload,
+    downloadFile
 }
