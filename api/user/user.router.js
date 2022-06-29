@@ -28,6 +28,14 @@ userRouter.post("/", userController.createUser);
 userRouter.post("/auth", userController.loginUser);
 
 
+/*
+// @params none
+// method post
+//get all user
+*/
+userRouter.get("/all", userController.getAll);
+
+
 
 
 

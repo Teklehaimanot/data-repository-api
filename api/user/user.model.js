@@ -5,6 +5,14 @@ const UserSchema = {
         type: String,
         required: true
     },
+    father_name: {
+        type: String,
+        required: true
+    },
+    role: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         unique: true,

@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken')
 require('dotenv/config')
 
 
-const createUser = async(req, res) => {
-    let { password, username, name } = _.pick(req.body, ['password', 'username', 'name'])
+const createUser = async (req, res) => {
+    let { password, username, name, role, father_name } = _.pick(req.body, ['password', 'username', 'name', 'role', 'father_name'])
 
     try {
-        if (!password || !username || !name) {
+        if (!password || !username || !name || !role || !father_name) {
             res.status(400).json({ error: 'name, username and password are required!' })
         }
 
@@ -19,7 +19,7 @@ const createUser = async(req, res) => {
 
         const saltRound = 10
         const passwordHash = await bcrypt.hash(password, saltRound)
-        const user = await User.create({ passwordHash, username, name })
+        const user = await User.create({ passwordHash, username, name, role, father_name })
         const userData = _.pick(user, ['_id', 'username'])
         const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET)
         console.log(accessToken)
@@ -27,18 +27,16 @@ const createUser = async(req, res) => {
 
     } catch (err) {
         console.log({ error: err })
-        res.status(400).json({ Error: 'Some error' })
+        res.status(400).json({ Error: err.message })
     }
 }
 
-const loginUser = async(req, res) => {
+const loginUser = async (req, res) => {
     let { password, username } = _.pick(req.body, ['username', 'password'])
     try {
         if (!password || !username) {
             return res.status(400).json({ error: 'Password and username are required!' })
         }
-
-
         const user = await User.find({ username })
         if (!user) {
             return res.status(400).json({ error: 'User not found!' })
@@ -59,7 +57,22 @@ const loginUser = async(req, res) => {
         res.status(400).json({ Error: 'Some error' })
     }
 }
+
+const getAll = async (req, res) => {
+    try {
+        const user = await User.find()
+        res.status(200).json({
+            success: true,
+            user: user
+        })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+
+    }
+
+}
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    getAll
 }
