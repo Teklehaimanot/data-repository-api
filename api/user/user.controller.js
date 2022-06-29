@@ -23,7 +23,7 @@ const createUser = async (req, res) => {
         const userData = _.pick(user, ['_id', 'username'])
         const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET)
         console.log(accessToken)
-        res.header('x-auth', `Bearer ${accessToken}`).json({ success: true, token: `Bearer ${accessToken}` })
+        res.header('x-auth', `Bearer ${accessToken}`).json({ success: true, token: `Bearer ${accessToken}`, user: { passwordHash, username, name, role, father_name } })
 
     } catch (err) {
         console.log({ error: err })
@@ -71,8 +71,25 @@ const getAll = async (req, res) => {
     }
 
 }
+const deleteUser = async (req, res) => {
+    try {
+        const find = await User.findById({ _id: req.params.userId })
+        if (!find) {
+            return res.status(404).json({ error: 'dataset not found' })
+        }
+        const deltedUser = await User.deleteOne({ _id: req.params.userId })
+        res.status(200).json({
+            success: true,
+            user: deltedUser
+        })
+
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
 module.exports = {
     createUser,
     loginUser,
-    getAll
+    getAll,
+    deleteUser
 }

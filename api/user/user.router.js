@@ -35,6 +35,13 @@ userRouter.post("/auth", userController.loginUser);
 */
 userRouter.get("/all", userController.getAll);
 
+/*
+// @params id
+// method delete
+//delete user
+*/
+userRouter.delete("/:userId", userController.deleteUser);
+
 
 
 
