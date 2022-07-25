@@ -50,7 +50,7 @@ const loginUser = async (req, res) => {
 
         const userData = _.pick(user[0], ['_id', 'username', 'name'])
         const accessToken = jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET)
-        res.header('x-auth', `Bearer ${accessToken}`).json({ success: true, token: `Bearer ${accessToken}` })
+        res.header('x-auth', `Bearer ${accessToken}`).json({ success: true, token: `Bearer ${accessToken}`, role: user[0].role })
 
     } catch (err) {
         console.log({ error: err })
